@@ -1,8 +1,8 @@
+import matplotlib.pyplot as plt
 import sys
 import math_lib
 import matplotlib
 matplotlib.use('Agg')
-import matplotlib.pyplot as plt
 
 
 def boxplot(L, out_file_name):
@@ -17,8 +17,8 @@ def boxplot(L, out_file_name):
         plt.ylabel('Distribution')
         plt.title('Mean: %6.2f, Standard deviation: %6.2f' %
                   (math_lib.list_mean(L), math_lib.list_stdev(L)))
-        plt.show()
-        sys.exit
+        plt.savefig(out_file_name, bbox_inches='tight')
+        pass
 
 
 def histogram(L, out_file_name):
@@ -33,22 +33,24 @@ def histogram(L, out_file_name):
         plt.ylabel('Frequency')
         plt.title('Mean: %6.2f, Standard deviation: %6.2f' %
                   (math_lib.list_mean(L), math_lib.list_stdev(L)))
-        plt.show()
-        sys.exit
+        plt.savefig(out_file_name, bbox_inches='tight')
+        pass
 
 
 def combo(L, out_file_name):
     """Generates boxplot and histogram from given data
     """
-    fig, ax = plt.subplots(nrows=1, ncols=2, figsize=(12, 6))
-    plt.subplot(1, 2, 1)
-    plt.boxplot(L)
-    plt.xlabel('Value')
-    plt.ylabel('Distribution')
+    if len(L) == 0:
+        return None
+        fig, ax = plt.subplots(nrows=1, ncols=2, figsize=(12, 6))
+        plt.subplot(1, 2, 1)
+        plt.boxplot(L)
+        plt.xlabel('Value')
+        plt.ylabel('Distribution')
 
-    plt.subplot(1, 2, 2)
-    plt.hist(L, bins=20)
-    plt.xlabel('Value')
-    plt.ylabel('Frequency')
-    plt.show()
-    sys.exit
+        plt.subplot(1, 2, 2)
+        plt.hist(L, bins=20)
+        plt.xlabel('Value')
+        plt.ylabel('Frequency')
+        plt.savefig(out_file_name, bbox_inches='tight')
+        sys.exit
